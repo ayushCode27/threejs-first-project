@@ -52,8 +52,8 @@ const fontloader = new FontLoader();
 fontloader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   const textGeometry = new TextGeometry("Ayush Agarwal", {
     font,
-    size: 0.5,
-    height: 0.2,
+    size: 0.8,
+    height: 0.5,
     curveSegments: 5,
     bevelEnabled: true,
     bevelThickness: 0.03,
@@ -68,29 +68,40 @@ fontloader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   const text = new THREE.Mesh(textGeometry, material);
   scene.add(text);
 
-  const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 20);
+  const sphereGeometry = new THREE.SphereGeometry( 0.2, 32, 16);
   let num = 1;
+  const circleGeometry = new THREE.CircleGeometry(0.5, 30);
 
-  for (let i = 0; i < 100; i++) {
-    const donut = new THREE.Mesh(donutGeometry, material);
+  for (let i = 0; i < 300; i++) {
+    const sphere = new THREE.Mesh(sphereGeometry, material);
+    const circle = new THREE.Mesh(circleGeometry, material);
 
-    donut.position.x = (Math.random() - 0.5) * 10;
-    donut.position.y = (Math.random() - 0.5) * 10;
-    donut.position.z = (Math.random() - 0.5) * 10;
+    sphere.position.x = (Math.random() - 0.5) * 50;
+    sphere.position.y = (Math.random() - 0.5) * 50;
+    sphere.position.z = (Math.random() - 0.5) * 50;
 
-    donut.rotation.x = Math.random() * Math.PI;
-    donut.rotation.z = Math.random() * Math.PI;
+    sphere.rotation.x = Math.random() * Math.PI;
+    sphere.rotation.z = Math.random() * Math.PI;
+
+    circle.position.x = (Math.random() - 0.5) * 100;
+    circle.position.y = (Math.random() - 0.5) * 100;
+    circle.position.z = (Math.random() - 0.5) * 100;
+
+    circle.rotation.x = Math.random() * Math.PI;
+    circle.rotation.z = Math.random() * Math.PI;
 
     const scale = Math.random();
-    donut.scale.set(scale, scale, scale);
-    scene.add(donut);
+    sphere.scale.set(scale, scale, scale);
+    circle.scale.set(scale, scale, scale);
+    scene.add(sphere);
+    scene.add(circle);
   }
 
-    setInterval(() => {
-      material.matcap = obj[num];
-      num++;
-      if (num == 9) num = 1;
-    }, 1000);
+  setInterval(() => {
+    material.matcap = obj[num];
+    num++;
+    if (num == 9) num = 1;
+  }, 1000);
 });
 
 /**
